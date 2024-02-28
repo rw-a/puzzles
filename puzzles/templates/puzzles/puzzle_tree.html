@@ -3,8 +3,20 @@
 <head>
     {% load static %}
     <meta charset="UTF-8">
-    <title>Index</title>
+    <title>View Puzzle Tree</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" type="text/css" href="{%  static 'treant-js/Treant.min.css' %}">
+    <style>
+        .node {
+            border: 1px solid #000;
+            border-radius: 3px;
+            padding: 0.5rem;
+        }
+
+        p {
+            margin: 0;
+        }
+    </style>
 </head>
 <body>
     <div id="tree"></div>
