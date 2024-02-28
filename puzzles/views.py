@@ -15,10 +15,10 @@ def puzzle_tree(request):
 
             if puzzle.parent:
                 tree_nodes.append(
-                    f'const P{puzzle.pk} = {{parent: P{puzzle.parent.pk}, text: {{name:"{puzzle.name}"}}, link: {{href: "/{puzzle.identifier}"}}}};')
+                    f'const P{puzzle.pk} = {{parent: P{puzzle.parent.pk}, text: {{name:"{puzzle.name}"}}, link: {{href: "/journal/{puzzle.identifier}"}}}};')
             else:
                 tree_nodes.append(
-                    f'const P{puzzle.pk} = {{text: {{name:"{puzzle.name}"}}, link: {{href: "/{puzzle.identifier}"}}}};')
+                    f'const P{puzzle.pk} = {{text: {{name:"{puzzle.name}"}}, link: {{href: "/journal/{puzzle.identifier}"}}}};')
 
     tree_nodes.append(f'const tree_config = [config, {", ".join(node_names)}];')
 
