@@ -8,8 +8,8 @@ class Puzzle(models.Model):
     identifier = models.CharField(max_length=100, unique=True)
     password = models.CharField(max_length=100)
     password_type = models.CharField(max_length=10, choices=[
-        ('letters', 'letters'),
-        ('numbers', 'numbers')
+        ('text', 'Letters'),
+        ('number', 'Numbers')
     ])
     text = models.TextField()
     date = models.DateTimeField()
