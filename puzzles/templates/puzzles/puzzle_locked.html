@@ -10,14 +10,20 @@
 <body>
     <div class="md:container p-4">
         <div class="lg:max-w-96 mx-auto">
-            <h2 class="text-2xl font-medium">Uh Oh!</h2>
-            <p>This journal entry is encrypted!</p>
-            <p>Please enter the decryption key to proceed.</p>
-            {% for c in puzzle.password %}
-            <input title="Decryption Key" type="{{ puzzle.password_type }}" class="input input-bordered w-12 text-base-content" minlength="1" maxlength="1">
-            {% endfor %}
-            <br>
-            <button class="btn btn-primary my-2">Decrypt</button>
+            <a href="/" class="inline-block">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-back scale-150" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 11l-4 4l4 4m-4 -4h11a4 4 0 0 0 0 -8h-1" /></svg>
+            </a>
+            <div class="flex flex-col items-center">
+                <h2 class="text-2xl font-medium">Uh Oh!</h2>
+                <p>This journal entry is encrypted!</p>
+                <p>Please enter the decryption key to proceed.</p>
+                <div>
+                    {% for c in puzzle.password %}
+                    <input title="Decryption Key" type="{{ puzzle.password_type }}" class="input input-bordered w-12 text-base-content" minlength="1" maxlength="1">
+                    {% endfor %}
+                </div>
+                <button class="btn btn-primary my-2">Decrypt</button>
+            </div>
         </div>
     </div>
 </body>
