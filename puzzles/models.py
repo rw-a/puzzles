@@ -8,7 +8,7 @@ class Puzzle(models.Model):
     password = models.CharField(max_length=100)
     text = models.TextField()
     date = models.DateTimeField()
-    parent = models.ForeignKey('self', on_delete=models.SET_NULL, null=True)
+    parent = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True)
 
     class Meta:
         indexes = (
