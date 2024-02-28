@@ -20,6 +20,9 @@ class Puzzle(models.Model):
             Index(fields=['identifier']),
         )
         ordering = ('identifier',)
+        
+    def __str__(self):
+        return f"[{self.identifier}] {self.name}"
 
 
 class Hint(models.Model):
@@ -32,8 +35,14 @@ class Hint(models.Model):
             Index(fields=['puzzle', 'order']),
         )
         ordering = ['puzzle', 'order']
+    
+    def __str__(self):
+        return f"Hint {self.order} for {str(self.puzzle)}"
 
 
 class Solve(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     solved = models.JSONField(default=list, blank=True, null=True)
+    
+    def __str__(self):
+        return f"User {self.user} solved {self.solved}"
