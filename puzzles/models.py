@@ -41,7 +41,7 @@ class Hint(models.Model):
 
 
 class Solve(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     solved = models.JSONField(default=list, blank=True, null=True)
     
     def __str__(self):
