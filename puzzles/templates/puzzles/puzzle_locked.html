@@ -17,7 +17,7 @@
                 <h2 class="text-2xl font-medium">Uh Oh!</h2>
                 <p>This journal entry is encrypted!</p>
                 <p>Please enter the decryption key to proceed.</p>
-                <div>
+                <div id="inputs">
                     {% for c in puzzle.password %}
                     <input title="Decryption Key" type="{{ puzzle.password_type }}" class="input input-bordered w-12 text-base-content" minlength="1" maxlength="1">
                     {% endfor %}
@@ -26,5 +26,25 @@
             </div>
         </div>
     </div>
+    <script>
+        const container = document.getElementById("inputs");
+        container.onkeyup = function(e) {
+            const target = e.target;
+            const maxLength = parseInt(target.attributes["maxlength"].value, 10);
+            const myLength = target.value.length;
+
+            // Move to next field if full
+            if (myLength >= maxLength) {
+                const next = target.nextElementSibling;
+                next.focus();
+            }
+
+            // Move to previous field if empty (user pressed backspace)
+            else if (myLength === 0) {
+                const previous = target.previousElementSibling;
+                previous.focus();
+            }
+        }
+    </script>
 </body>
 </html>
