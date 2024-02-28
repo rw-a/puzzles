@@ -10,7 +10,7 @@ def puzzle_tree(request):
 
     for puzzle in Puzzle.objects.all():
         # If solved, or parent solved (yet to be solved), or no parent (starting puzzle)
-        if puzzle.pk in solves.solved or puzzle.parent.pk in solves.solved or not puzzle.parent:
+        if puzzle.identifier in solves.solved or not puzzle.parent or puzzle.parent.identifier in solves.solved:
             node_names.append(f"P{puzzle.pk}")
 
             if puzzle.parent:
@@ -25,3 +25,15 @@ def puzzle_tree(request):
     node_code = "\n".join(tree_nodes)
 
     return render(request, "puzzles/puzzle_tree.html", {"node_code": node_code})
+
+
+def puzzle_view(request, identifier: str):
+    puzzle = Puzzle.objects.get(identifier=identifier)
+    solved = Solve.objects.get(user=request.user).solved
+
+    if puzzle.identifier in solved:
+        # If solved
+        return render(request, "puzzles/puzzle_view.html", {"puzzle": puzzle})
+    else:
+        # If not solved
+        return render(request, "puzzles/puzzle_locked.html", {"puzzle": puzzle})
