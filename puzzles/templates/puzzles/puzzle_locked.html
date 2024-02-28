@@ -16,6 +16,8 @@
             {% for c in puzzle.password %}
             <input title="Decryption Key" type="{{ puzzle.password_type }}" class="input input-bordered w-12 text-base-content" minlength="1" maxlength="1">
             {% endfor %}
+            <br>
+            <button class="btn btn-primary my-2">Decrypt</button>
         </div>
     </div>
 </body>
