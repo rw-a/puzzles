@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.indexes import Index
 
@@ -31,3 +32,8 @@ class Hint(models.Model):
             Index(fields=['puzzle', 'order']),
         )
         ordering = ['puzzle', 'order']
+
+
+class Solve(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    solved = models.JSONField(default=list, blank=True, null=True)

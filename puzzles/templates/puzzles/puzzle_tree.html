@@ -9,27 +9,13 @@
 <body>
     <div id="tree"></div>
     <script src="{% static 'treant-js/vendor/raphael.js' %}"></script>
-    <script src="{% static 'treant-js/vendor/jquery.min.js' %}"></script>
     <script src="{% static 'treant-js/Treant.min.js' %}"></script>
     <script>
-        const config = {
-            chart: {
-                container: "#tree"
-            },
+        const config = {container: "#tree"};
 
-            nodeStructure: {
-                text: { name: "Parent node" },
-                children: [
-                    {
-                        text: { name: "First child" }
-                    },
-                    {
-                        text: { name: "Second child" }
-                    }
-                ]
-            }
-        }
-        const tree = new Treant(config, () => {}, $)
+        {{ node_code | safe }}
+
+        const tree = new Treant(tree_config)
     </script>
 </body>
 </html>
