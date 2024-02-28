@@ -1,5 +1,5 @@
 from django.shortcuts import render
 
 
-def index(request):
-    return render(request, "puzzles/index.html")
+def puzzle_tree(request):
+    return render(request, "puzzles/puzzle_tree.html")

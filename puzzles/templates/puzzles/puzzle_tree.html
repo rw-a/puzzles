@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>Index</title>
+    <link rel="stylesheet" type="text/css" href="{%  static 'treant-js/Treant.css' %}">
+</head>
+<body>
+    <div id="tree"></div>
+    <script src="{% static 'treant-js/vendor/raphael.js' %}"></script>
+    <script src="{% static 'treant-js/vendor/jquery.min.js' %}"></script>
+    <script src="{% static 'treant-js/Treant.js' %}"></script>
+    <script>
+        const config = {
+            chart: {
+                container: "#tree"
+            },
+
+            nodeStructure: {
+                text: { name: "Parent node" },
+                children: [
+                    {
+                        text: { name: "First child" }
+                    },
+                    {
+                        text: { name: "Second child" }
+                    }
+                ]
+            }
+        }
+        const tree = new Treant(config, () => {}, $)
+    </script>
+</body>
+</html>
