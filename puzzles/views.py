@@ -47,7 +47,6 @@ def puzzle_view(request, identifier: str):
 
         password = puzzle.password
         data = dict(request.POST)
-        print(data)
 
         # Check if password is correct
         for i, c in enumerate(password):
