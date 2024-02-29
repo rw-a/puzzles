@@ -1,7 +1,9 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 from .models import Hint, Puzzle, Solve
 
 
+@login_required
 def puzzle_tree(request):
     solves = Solve.objects.get(user=request.user)
 
@@ -27,6 +29,7 @@ def puzzle_tree(request):
     return render(request, "puzzles/puzzle_tree.html", {"node_code": node_code})
 
 
+@login_required
 def puzzle_view(request, identifier: str):
     # If trying to load a page
     if request.method == "GET":
