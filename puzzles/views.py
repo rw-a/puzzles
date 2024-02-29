@@ -1,6 +1,5 @@
-from django.contrib.auth.models import User
-from django.shortcuts import render, redirect
-from .models import Puzzle, Solve
+from django.shortcuts import render
+from .models import Hint, Puzzle, Solve
 
 
 def puzzle_tree(request):
@@ -36,7 +35,8 @@ def puzzle_view(request, identifier: str):
 
         if puzzle.identifier in solved:
             # If solved
-            return render(request, "puzzles/puzzle_view.html", {"puzzle": puzzle})
+            hints = Hint.objects.filter(puzzle=puzzle)
+            return render(request, "puzzles/puzzle_view.html", {"puzzle": puzzle, "hints": hints})
         else:
             # If not solved
             return render(request, "puzzles/puzzle_locked.html", {"puzzle": puzzle})

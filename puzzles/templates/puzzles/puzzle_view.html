@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="emerald">
 <head>
     <meta charset="UTF-8">
     <title>Journal Entry | {{ puzzle.name }}</title>
@@ -9,10 +9,24 @@
 </head>
 <body>
      <div class="md:container p-4">
-        <div class="lg:max-w-96 mx-auto">
+        <div class="lg:max-w-96 mx-auto relative">
             <a href="/" class="inline-block">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-back scale-150" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 11l-4 4l4 4m-4 -4h11a4 4 0 0 0 0 -8h-1" /></svg>
             </a>
+            <div class="absolute end-0">
+                {% for hint in hints %}
+                    <button class="btn btn-sm btn-primary" onclick="M{{ forloop.counter }}.showModal()">{{ hint.order }}</button>
+                    <dialog id="M{{ forloop.counter }}" class="modal">
+                      <div class="modal-box">
+                        <h3 class="font-bold text-lg">Hint #{{ hint.order }}</h3>
+                        <p class="py-4">{{ hint.description | safe }}</p>
+                      </div>
+                      <form method="dialog" class="modal-backdrop">
+                        <button>close</button>
+                      </form>
+                    </dialog>
+                {% endfor %}
+            </div>
             <h2 class="text-2xl font-medium">{{ puzzle.name }}</h2>
             <p class="opacity-50">{{ puzzle.date }}</p>
             <p class="my-2">{{ puzzle.text | safe }}</p>
