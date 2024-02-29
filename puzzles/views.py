@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.contrib.auth.models import User
+from django.shortcuts import render, redirect
 from .models import Puzzle, Solve
 
 
@@ -28,12 +29,37 @@ def puzzle_tree(request):
 
 
 def puzzle_view(request, identifier: str):
-    puzzle = Puzzle.objects.get(identifier=identifier)
-    solved = Solve.objects.get(user=request.user).solved
+    # If trying to load a page
+    if request.method == "GET":
+        puzzle = Puzzle.objects.get(identifier=identifier)
+        solved = Solve.objects.get(user=request.user).solved
 
-    if puzzle.identifier in solved:
-        # If solved
+        if puzzle.identifier in solved:
+            # If solved
+            return render(request, "puzzles/puzzle_view.html", {"puzzle": puzzle})
+        else:
+            # If not solved
+            return render(request, "puzzles/puzzle_locked.html", {"puzzle": puzzle})
+
+    # If trying to unlock the puzzle through the form
+    elif request.method == "POST":
+        puzzle = Puzzle.objects.get(identifier=identifier)
+
+        password = puzzle.password
+        data = dict(request.POST)
+        print(data)
+
+        # Check if password is correct
+        for i, c in enumerate(password):
+            key = str(i + 1)
+
+            # If a single character is wrong
+            if data[key] != [c]:
+                return render(request, "puzzles/puzzle_locked.html", {"puzzle": puzzle, "failed": True})
+
+        # If password is correct, update
+        solves = Solve.objects.get(user=request.user)
+        solves.solved = solves.solved + [puzzle.identifier]
+        solves.save()
+
         return render(request, "puzzles/puzzle_view.html", {"puzzle": puzzle})
-    else:
-        # If not solved
-        return render(request, "puzzles/puzzle_locked.html", {"puzzle": puzzle})
