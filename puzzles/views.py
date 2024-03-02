@@ -56,7 +56,7 @@ def puzzle_view(request, identifier: str):
             key = str(i + 1)
 
             # If a single character is wrong
-            if data[key] != [c]:
+            if data[key][0].lower() != c.lower():
                 return render(request, "puzzles/puzzle_locked.html", {"puzzle": puzzle, "failed": True})
 
         # If password is correct, update
