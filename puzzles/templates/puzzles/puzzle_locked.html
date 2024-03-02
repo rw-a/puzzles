@@ -14,13 +14,15 @@
                 <a href="/" class="inline-block mr-auto">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-back scale-150" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 11l-4 4l4 4m-4 -4h11a4 4 0 0 0 0 -8h-1" /></svg>
                 </a>
-                <p class="opacity-50 mr-2">Hint</p>
+                {% if hints %}
+                <p class="opacity-50 mr-2">Hints</p>
+                {% endif %}
                 <div>
                     {% for hint in hints %}
                         <button class="btn btn-sm btn-secondary btn-outline" onclick="M{{ forloop.counter }}.showModal()">{{ hint.order }}</button>
                         <dialog id="M{{ forloop.counter }}" class="modal">
                           <div class="modal-box">
-                            <h3 class="font-bold text-lg">Hint #{{ hint.order }}</h3>
+                            <h3 class="font-bold text-lg">Hint {{ hint.order }}</h3>
                             <p class="py-4">{{ hint.description | safe }}</p>
                           </div>
                           <form method="dialog" class="modal-backdrop">
