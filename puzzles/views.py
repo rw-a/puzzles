@@ -1,6 +1,16 @@
+import os
+from django.conf import settings
 from django.shortcuts import render
+from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from .models import Hint, Puzzle, Solve
+
+
+def media(request, file_path=None):
+    with open(os.path.join(settings.MEDIA_ROOT, file_path), 'rb') as doc:
+        response = HttpResponse(doc.read(), content_type='application/doc')
+        response['Content-Disposition'] = 'filename=%s' % (file_path.split('/')[-1])
+        return response
 
 
 @login_required

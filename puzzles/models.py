@@ -12,6 +12,7 @@ class Puzzle(models.Model):
         ('number', 'Numbers')
     ])
     text = models.TextField()
+    image = models.ImageField(null=True, blank=True)
     date = models.DateTimeField()
     parent = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True)
 
