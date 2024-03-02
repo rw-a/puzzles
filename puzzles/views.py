@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Hint, Puzzle, Solve
 
 
+# Serve media files
 def media(request, file_path=None):
     with open(os.path.join(settings.MEDIA_ROOT, file_path), 'rb') as doc:
         response = HttpResponse(doc.read(), content_type='application/doc')
