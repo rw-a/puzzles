@@ -21,7 +21,7 @@ def puzzle_tree(request):
     node_names = []
 
     for puzzle in Puzzle.objects.all():
-        # If solved, or parent solved (yet to be solved), or no parent (starting puzzle)
+        # If solved, or no parent (starting puzzle), or parent solved (yet to be solved)
         if puzzle.identifier in solves.solved or not puzzle.parent or puzzle.parent.identifier in solves.solved:
             node_names.append(f"P{puzzle.pk}")
 
@@ -48,11 +48,11 @@ def puzzle_view(request, identifier: str):
 
         if puzzle.identifier in solved:
             # If solved
-            hints = Hint.objects.filter(puzzle=puzzle)
-            return render(request, "puzzles/puzzle_view.html", {"puzzle": puzzle, "hints": hints})
+            return render(request, "puzzles/puzzle_view.html", {"puzzle": puzzle})
         else:
             # If not solved
-            return render(request, "puzzles/puzzle_locked.html", {"puzzle": puzzle})
+            hints = Hint.objects.filter(puzzle=puzzle)
+            return render(request, "puzzles/puzzle_locked.html", {"puzzle": puzzle, "hints": hints})
 
     # If trying to unlock the puzzle through the form
     elif request.method == "POST":
@@ -67,7 +67,8 @@ def puzzle_view(request, identifier: str):
 
             # If a single character is wrong
             if data[key][0].lower() != c.lower():
-                return render(request, "puzzles/puzzle_locked.html", {"puzzle": puzzle, "failed": True})
+                hints = Hint.objects.filter(puzzle=puzzle)
+                return render(request, "puzzles/puzzle_locked.html", {"puzzle": puzzle, "hints": hints, "failed": True})
 
         # If password is correct, update
         solves = Solve.objects.get(user=request.user)
