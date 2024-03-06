@@ -59,17 +59,13 @@ def puzzle_view(request, identifier: str):
     elif request.method == "POST":
         puzzle = Puzzle.objects.get(identifier=identifier)
 
-        password = puzzle.password
-        data = dict(request.POST)
+        true_password = puzzle.password
+        given_password = request.POST["key"]
 
-        # Check if password is correct
-        for i, c in enumerate(password):
-            key = str(i + 1)
-
-            # If a single character is wrong
-            if data[key][0].lower() != c.lower():
-                hints = Hint.objects.filter(puzzle=puzzle)
-                return render(request, "puzzles/puzzle_locked.html", {"puzzle": puzzle, "hints": hints, "failed": True})
+        # If password is incorrect
+        if true_password.lower() != given_password.lower():
+            hints = Hint.objects.filter(puzzle=puzzle)
+            return render(request, "puzzles/puzzle_locked.html", {"puzzle": puzzle, "hints": hints, "failed": True})
 
         # If password is correct, update
         solves = Solve.objects.get(user=request.user)
