@@ -69,7 +69,8 @@ def puzzle_view(request, identifier: str):
 
         # If password is correct, update
         solves = Solve.objects.get(user=request.user)
-        solves.solved = solves.solved + [puzzle.identifier]
-        solves.save()
+        if puzzle.identifier not in solves.solved:
+            solves.solved = solves.solved + [puzzle.identifier]
+            solves.save()
 
         return render(request, "puzzles/puzzle_view.html", {"puzzle": puzzle})
