@@ -35,7 +35,7 @@
             <form method="post" class="flex flex-col items-center my-5">{% csrf_token %}
                 <h2 class="text-2xl font-medium text-error">Access Denied</h2>
                 <p>Please enter the decryption key to proceed.</p>
-                <div id="inputs" class="my-2">
+                <div id="inputs" class="flex flex-wrap justify-center gap-1 my-2">
                     {% for c in puzzle.password %}
                     <input name="{{ forloop.counter }}" title="Decryption Key" type="{{ puzzle.password_type }}" class="input input-bordered w-12 text-base-content" minlength="1" maxlength="1">
                     {% endfor %}
